@@ -1,0 +1,15 @@
+coverage
+dist
+node_modules
+priv/*
+!priv/.gitkeep
+
+# Env
+.env
+
+# IDE
+.idea
+.vscode
+
+# Misc
+.DS_Store
