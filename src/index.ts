@@ -1,10 +1,9 @@
 import * as dotenv from 'dotenv'
+dotenv.config()
 
 import { getClient } from './client'
 
 async function main() {
-  dotenv.config()
-
   try {
     const { BOT_TOKEN } = process.env
     const client = getClient()

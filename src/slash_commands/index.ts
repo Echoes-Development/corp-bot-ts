@@ -1,9 +1,3 @@
-import { Client, Guild } from 'discord.js'
-
-export const getSlashCommandsGuild = (client: Client, guildId: string) => {
-
-}
-
-export const setupSlashCommandsGuild = (client: Client, guildId: string) => {
-
-}
+export { SLASH_COMMAND_DEFINITIONS } from './definitions'
+export { SLASH_COMMAND_HANDLERS } from './handlers'
+export { getFullHandlerName } from './utils'
