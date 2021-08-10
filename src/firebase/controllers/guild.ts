@@ -1,11 +1,8 @@
 import fb from '../'
 import { CMGuild } from '../../types/guild'
+import { DataOrError } from '../../types/error_returns'
 
-// TODO: Make these generics
-type BoolOrError = [boolean | null, Error | null]
-type GuildOrError = [CMGuild | null, Error | null]
-
-const getGuild = async (guildId: string): Promise<GuildOrError> => {
+const getGuild = async (guildId: string): Promise<DataOrError<CMGuild>> => {
   try {
     const guild = await fb.firestore()
       .collection('guilds')
@@ -19,7 +16,7 @@ const getGuild = async (guildId: string): Promise<GuildOrError> => {
   }
 }
 
-const updateGuild = async (guildId: string, updates: Object): Promise<BoolOrError> => {
+const updateGuild = async (guildId: string, updates: Object): Promise<DataOrError<boolean>> => {
   try {
     await fb.firestore()
       .collection('guilds')
