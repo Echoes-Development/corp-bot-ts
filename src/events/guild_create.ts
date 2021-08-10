@@ -24,6 +24,10 @@ export const guildCreate = async (client: Client, guild: Guild): Promise<void> =
       .set({
         admins,
         name: guild.name,
+        industry: {
+          buyChannel: '',
+          sellChannel: '',
+        },
         resourcePrices: {
           ore: {
             arkonor: { buy: 0, sell: 0 },

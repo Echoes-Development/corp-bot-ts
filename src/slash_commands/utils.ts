@@ -1,5 +1,7 @@
 import { CommandInteraction } from 'discord.js'
 
+type StringOrError = Promise<[string | null, Error | null]>
+
 export const getFullHandlerName = (interaction: CommandInteraction, name = '', count = 0): string => {
   const group = interaction.options.getSubcommandGroup()
   if (group && count === 0) {
@@ -14,3 +16,6 @@ export const getFullHandlerName = (interaction: CommandInteraction, name = '', c
 
   return name
 }
+
+export const getGuildIdFromInteraction = async (interaction: CommandInteraction): StringOrError =>
+  (!interaction.guild) ? [null, new Error('No guild ID for interaction')] : [interaction.guild.id, null]

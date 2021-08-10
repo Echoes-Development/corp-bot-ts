@@ -1,42 +1,26 @@
 import { Client, CommandInteraction, EmbedFieldData, MessageEmbed, TextChannel } from 'discord.js'
 
-import fb from '../../firebase'
-import { CMGuild } from '../../types/guild'
 import { EE_MINERALS } from '../../eve_echoes/minerals'
+import { getGuildIdFromInteraction } from '../utils'
+import { getGuild } from '../../firebase/controllers/guild'
 
 export const indyBuyMineralsHandler = async (client: Client, interaction: CommandInteraction): Promise<void> => {
-  // TODO: this check should be it's own function as it will be used a lot
-  const guildId = interaction.guild?.id
-  if (!guildId) {
+  const [guildId, guildIdErr] = await getGuildIdFromInteraction(interaction)
+  if (!guildId || guildIdErr) {
     return await interaction.reply({
       content: 'Invalid Guild ID',
       ephemeral: true,
     })
   }
 
-  // TODO: this should be it's own function in it's own file as it will be used a lot
-  let guild: CMGuild
-  try {
-    guild = await fb.firestore()
-      .collection('guilds')
-      .doc(guildId)
-      .get()
-      .then((resp): CMGuild => resp.data() as CMGuild)
-  } catch (e) {
-    console.error('Unable to set guild slash commands', e)
+  const [guild, guildError] = await getGuild(guildId)
+  if (!guild || guildError) {
     return await interaction.reply({
-      content: 'An error occurred updating your slash commands',
-      ephemeral: true,
-    })
-  }
-  if (!guild) {
-    return await interaction.reply({
-      content: 'Unable to load guild data',
+      content: 'An error occurred fetching your guild settings',
       ephemeral: true,
     })
   }
 
-  const embedOpts: EmbedFieldData[] = []
   const opts: { [min: string]: number } = {
     [EE_MINERALS.isogen]: interaction.options.getNumber(EE_MINERALS.isogen) || 0,
     [EE_MINERALS.megacyte]: interaction.options.getNumber(EE_MINERALS.megacyte) || 0,
@@ -47,21 +31,36 @@ export const indyBuyMineralsHandler = async (client: Client, interaction: Comman
     [EE_MINERALS.tritanium]: interaction.options.getNumber(EE_MINERALS.tritanium) || 0,
     [EE_MINERALS.zydrine]: interaction.options.getNumber(EE_MINERALS.zydrine) || 0,
   }
+
+  const embedOpts: EmbedFieldData[] = []
   Object.keys(opts).forEach((key) => {
     const val = opts[key]
     if (val && val > 0) {
       embedOpts.push({ name: key, value: val.toString() })
     }
   })
+  if (embedOpts.length === 0) {
+    return await  interaction.reply({
+      content: 'No minerals to process, aborting'
+    })
+  }
 
   // TODO: Create thread helpers to re-use the below code for other things that will spawn threads
   try {
-    const channel = interaction.channel as TextChannel
+    let channel = await (client.channels.cache.get(guild.industry.buyChannel) as TextChannel)
+    if (!channel) {
+      return await interaction.reply({
+        content: 'Could not find buy channel for indy, have you set it?'
+      })
+    }
+
     const thread = await channel.threads.create({
       autoArchiveDuration: 10080,
-      name: `buy-min-${interaction.user.username.toLowerCase()}`,
+      name: `Buy Min ${interaction.user.username}`,
       reason: `${interaction.user.username} is wanting to buy minerals from the corp`,
     })
+
+    await thread.members.add(interaction.user.id)
     await thread.send({
       embeds: [
         new MessageEmbed()

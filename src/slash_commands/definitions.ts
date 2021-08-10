@@ -18,6 +18,32 @@ export const SLASH_COMMAND_DEFINITIONS: ApplicationCommandData[] = [
             type: 'SUB_COMMAND'
           }
         ]
+      },
+      {
+        description: 'Manage industry settings',
+        name: 'industry',
+        type: 'SUB_COMMAND_GROUP',
+        options: [
+          {
+            description: 'Sets the channels your corp uses for purchasing and selling from industry',
+            name: 'channels',
+            type: 'SUB_COMMAND',
+            options: [
+              {
+                description: 'The channel to use for purchasing from industry',
+                name: 'buy_channel',
+                required: true,
+                type: 'CHANNEL'
+              },
+              {
+                description: 'The channel to use for selling to industry',
+                name: 'sell_channel',
+                required: true,
+                type: 'CHANNEL'
+              }
+            ]
+          }
+        ]
       }
     ]
   },

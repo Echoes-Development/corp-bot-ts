@@ -16,13 +16,15 @@ export const adminCommandsSetHandler = async (client: Client, interaction: Comma
   } catch (e) {
     console.error('Unable to set guild slash commands', e)
     return await interaction.reply({
-      content: 'An error occurred updating your slash commands'
+      content: 'An error occurred updating your slash commands',
+      ephemeral: true,
     })
   }
 
   try {
     await interaction.reply({
-      content: `Slash commands have been set/updated`
+      content: `Slash commands have been set/updated`,
+      ephemeral: true,
     })
   } catch (e) {
     console.error(e)
