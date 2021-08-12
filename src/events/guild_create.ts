@@ -13,10 +13,6 @@ export const guildCreate = async (client: Client, guild: Guild): Promise<void> =
 
   try {
     const admins = [guild.ownerId]
-    const me = guild.me?.id
-    if (me && guild.ownerId !== me) {
-      admins.push(me)
-    }
 
     await fb.firestore()
       .collection('guilds')
@@ -28,6 +24,7 @@ export const guildCreate = async (client: Client, guild: Guild): Promise<void> =
           buyChannel: '',
           sellChannel: '',
         },
+        isSetup: false,
         resourcePrices: {
           ore: {
             arkonor: { buy: 0, sell: 0 },

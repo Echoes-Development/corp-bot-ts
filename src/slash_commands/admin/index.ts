@@ -1,2 +1,5 @@
+export { adminsAddHandler } from './admins_add'
+export { adminsDeleteHandler } from './admins_delete'
 export { adminCommandsSetHandler } from './commands_set'
 export { adminIndustryChannelsHandler } from './industry_channels'
+export { adminIndustryRolesHandler } from './industry_roles'

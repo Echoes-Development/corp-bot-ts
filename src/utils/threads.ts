@@ -1,4 +1,4 @@
-import { TextChannel, ThreadChannel } from 'discord.js'
+import {RoleMention, TextChannel, ThreadChannel} from 'discord.js'
 import { DataOrError } from '../types/error_returns'
 
 const getThread = async (channel: TextChannel, threadId: string): Promise<DataOrError<ThreadChannel>> => {
@@ -30,6 +30,19 @@ const createThread = async (
   }
 }
 
+const addRoleToThread = async (thread: ThreadChannel, roleId: string): Promise<DataOrError<boolean>> => {
+  try {
+    await thread.send({
+      content: `<@&${roleId}>`
+    })
+    return [true, null]
+  } catch (e) {
+    console.error(e)
+    return [null, new Error('Unable to add role to thread')]
+  }
+}
+
+
 const addMembersToThread = async (
   thread: ThreadChannel,
   userIdsToAdd: string[]
@@ -47,6 +60,7 @@ const addMembersToThread = async (
 
 export {
   addMembersToThread,
+  addRoleToThread,
   createThread,
   getThread
 }

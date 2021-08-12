@@ -4,7 +4,7 @@ import { EE_MINERALS } from '../../eve_echoes/minerals'
 import fb from '../../firebase'
 import { getGuildIdFromInteraction } from '../utils'
 import { getGuild } from '../../firebase/controllers/guild'
-import { addMembersToThread, createThread } from '../../utils/threads'
+import {addMembersToThread, addRoleToThread, createThread} from '../../utils/threads'
 import { createOrder } from '../../firebase/controllers/orders'
 import { OrderStatus, OrderType } from '../../types/order'
 
@@ -117,13 +117,22 @@ export const indyBuyMineralsHandler = async (client: Client, interaction: Comman
   }
 
   // Add the member who created the order to the thread
-  // TODO: Create settings to add default members to these ticket threads
   const [addedMembers, addedMembersError] = await addMembersToThread(thread, [interaction.user.id])
   if (!addedMembers || addedMembersError) {
     return await interaction.reply({
       content: 'Unable to add members to the new thread',
       ephemeral: true,
     })
+  }
+
+  if (guild.industry.roleFulfillment) {
+    const [addedRole, addedRoleErr] = await addRoleToThread(thread, guild.industry.roleFulfillment)
+    if (!addedRole || addedRoleErr) {
+      return await interaction.reply({
+        content: 'Unable to add fulfillment industry role',
+        ephemeral: true,
+      })
+    }
   }
 
   // Create a new embed and send it to the new spawned thread

@@ -1,6 +1,12 @@
 import { Client, CommandInteraction } from 'discord.js'
 
-import { adminCommandsSetHandler, adminIndustryChannelsHandler } from './admin'
+import {
+  adminCommandsSetHandler,
+  adminIndustryChannelsHandler,
+  adminIndustryRolesHandler,
+  adminsAddHandler,
+  adminsDeleteHandler
+} from './admin'
 import { indyBuyMineralsHandler } from './indy'
 
 interface SlashCommandHandlers {
@@ -8,7 +14,10 @@ interface SlashCommandHandlers {
 }
 
 export const SLASH_COMMAND_HANDLERS: SlashCommandHandlers = {
+  adminadminsadd: adminsAddHandler,
+  adminadminsdelete: adminsDeleteHandler,
   admincommandsset: adminCommandsSetHandler,
   adminindustrychannels: adminIndustryChannelsHandler,
+  adminindustryroles: adminIndustryRolesHandler,
   indymineralsbuy: indyBuyMineralsHandler
 }

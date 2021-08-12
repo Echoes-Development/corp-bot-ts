@@ -1,13 +1,29 @@
 import { Client, CommandInteraction } from 'discord.js'
 
 import { SLASH_COMMAND_DEFINITIONS } from '../definitions'
+import {getGuild} from "../../firebase/controllers/guild";
+import {ensureAdmin} from "../../utils/permissions";
 
 export const adminCommandsSetHandler = async (client: Client, interaction: CommandInteraction): Promise<void> => {
   const guildId = interaction.guild?.id
   if (!guildId) {
     return await interaction.reply({
       content: 'Invalid Guild ID',
-      ephemeral: true,
+    })
+  }
+
+  // Get guild settings
+  const [guild, guildError] = await getGuild(guildId)
+  if (!guild || guildError) {
+    return await interaction.reply({
+      content: 'An error occurred fetching your guild settings',
+    })
+  }
+
+  const isAdmin = ensureAdmin(guild, interaction.user.id)
+  if (!isAdmin) {
+    return await interaction.reply({
+      content: `You don't have permissions to update the slash commands for this server`
     })
   }
 
@@ -17,14 +33,12 @@ export const adminCommandsSetHandler = async (client: Client, interaction: Comma
     console.error('Unable to set guild slash commands', e)
     return await interaction.reply({
       content: 'An error occurred updating your slash commands',
-      ephemeral: true,
     })
   }
 
   try {
     await interaction.reply({
       content: `Slash commands have been set/updated`,
-      ephemeral: true,
     })
   } catch (e) {
     console.error(e)
