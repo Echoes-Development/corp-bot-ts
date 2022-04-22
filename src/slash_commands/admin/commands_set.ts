@@ -1,8 +1,8 @@
 import { Client, CommandInteraction } from 'discord.js'
 
 import { SLASH_COMMAND_DEFINITIONS } from '../definitions'
-import {getGuild} from "../../firebase/controllers/guild";
-import {ensureAdmin} from "../../utils/permissions";
+import { getGuild } from "../../firebase/controllers";
+import { ensureAdmin } from "../../utils";
 
 export const adminCommandsSetHandler = async (client: Client, interaction: CommandInteraction): Promise<void> => {
   const guildId = interaction.guild?.id

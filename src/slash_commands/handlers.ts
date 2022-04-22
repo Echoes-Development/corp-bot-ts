@@ -7,7 +7,10 @@ import {
   adminsAddHandler,
   adminsDeleteHandler
 } from './admin'
-import { indyBuyMineralsHandler } from './indy'
+import { 
+  indyBuyMineralsHandler,
+  indySellOreHandler,
+ } from './indy'
 
 interface SlashCommandHandlers {
   [cmd: string]: (client: Client, interaction: CommandInteraction) => Promise<void>
@@ -19,5 +22,6 @@ export const SLASH_COMMAND_HANDLERS: SlashCommandHandlers = {
   admincommandsset: adminCommandsSetHandler,
   adminindustrychannels: adminIndustryChannelsHandler,
   adminindustryroles: adminIndustryRolesHandler,
-  indymineralsbuy: indyBuyMineralsHandler
+  indymineralsbuy: indyBuyMineralsHandler,
+  indyoresell: indySellOreHandler,
 }

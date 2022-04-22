@@ -1,7 +1,8 @@
 import { Client, Intents } from 'discord.js'
 
 import { guildCreate } from './events'
-import { getFullHandlerName, SLASH_COMMAND_HANDLERS } from './slash_commands'
+import { SLASH_COMMAND_HANDLERS } from './slash_commands'
+import { getFullHandlerName } from './utils'
 
 export const getClient = () => {
   const client = new Client({

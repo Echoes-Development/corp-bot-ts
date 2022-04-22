@@ -1,8 +1,7 @@
 import { Client, CommandInteraction } from 'discord.js'
 
-import { getGuildIdFromInteraction } from '../utils'
-import {getGuild, updateGuild} from '../../firebase/controllers/guild'
-import {ensureAdmin} from "../../utils/permissions";
+import { getGuild, updateGuild } from '../../firebase/controllers/guild'
+import { ensureAdmin, getGuildIdFromInteraction } from "../../utils";
 
 export const adminIndustryChannelsHandler = async (client: Client, interaction: CommandInteraction): Promise<void> => {
   const [guildId, guildIdErr] = await getGuildIdFromInteraction(interaction)

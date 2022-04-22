@@ -1,4 +1,5 @@
 import {ApplicationCommandData} from 'discord.js'
+import { EE_ORE } from '../eve_echoes';
 
 import {EE_MINERALS} from '../eve_echoes/minerals'
 import {IndyTypes} from "../types/indy";
@@ -142,6 +143,95 @@ export const SLASH_COMMAND_DEFINITIONS: ApplicationCommandData[] = [
     description: 'Industry related commands',
     name: 'indy',
     options: [
+      {
+        description: 'Ore specific indy commands',
+        name: 'ore',
+        type: 'SUB_COMMAND_GROUP',
+        options: [
+          {
+            description: 'Sell ore to the corporation',
+            name: 'sell',
+            type: 'SUB_COMMAND',
+            options: [
+              {
+                description: `Amount of ${EE_ORE.arkonor}`,
+                name: EE_ORE.arkonor,
+                type: 'NUMBER',
+              },
+              {
+                description: `Amount of ${EE_ORE.bistot}`,
+                name: EE_ORE.bistot,
+                type: 'NUMBER',
+              },
+              {
+                description: `Amount of ${EE_ORE.crokite}`,
+                name: EE_ORE.crokite,
+                type: 'NUMBER',
+              },
+              {
+                description: `Amount of ${EE_ORE.dark_ochre}`,
+                name: EE_ORE.dark_ochre,
+                type: 'NUMBER',
+              },
+              {
+                description: `Amount of ${EE_ORE.gneiss}`,
+                name: EE_ORE.gneiss,
+                type: 'NUMBER',
+              },
+              {
+                description: `Amount of ${EE_ORE.jaspet}`,
+                name: EE_ORE.jaspet,
+                type: 'NUMBER',
+              },
+              {
+                description: `Amount of ${EE_ORE.kernite}`,
+                name: EE_ORE.kernite,
+                type: 'NUMBER',
+              },
+              {
+                description: `Amount of ${EE_ORE.hedbergite}`,
+                name: EE_ORE.hedbergite,
+                type: 'NUMBER',
+              },
+              {
+                description: `Amount of ${EE_ORE.hemorphite}`,
+                name: EE_ORE.hemorphite,
+                type: 'NUMBER',
+              },
+              {
+                description: `Amount of ${EE_ORE.omber}`,
+                name: EE_ORE.omber,
+                type: 'NUMBER',
+              },
+              {
+                description: `Amount of ${EE_ORE.plagioclase}`,
+                name: EE_ORE.plagioclase,
+                type: 'NUMBER',
+              },
+              {
+                description: `Amount of ${EE_ORE.pyroxeres}`,
+                name: EE_ORE.pyroxeres,
+                type: 'NUMBER',
+              },
+              {
+                description: `Amount of ${EE_ORE.scordite}`,
+                name: EE_ORE.scordite,
+                type: 'NUMBER',
+              },
+              {
+                description: `Amount of ${EE_ORE.spodumain}`,
+                name: EE_ORE.spodumain,
+                type: 'NUMBER',
+              },
+              {
+                description: `Amount of ${EE_ORE.veldspar}`,
+                name: EE_ORE.veldspar,
+                type: 'NUMBER',
+              },
+            ]
+          },
+        ]
+      },
       {
         description: 'Mineral specific indy commands',
         name: 'minerals',

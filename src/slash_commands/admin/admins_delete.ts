@@ -1,9 +1,8 @@
 import { Client, CommandInteraction } from 'discord.js'
 
 import fb from '../../firebase'
-import { getGuildIdFromInteraction } from '../utils'
-import {getGuild, updateGuild} from '../../firebase/controllers/guild'
-import {ensureAdmin} from "../../utils/permissions";
+import {getGuild, updateGuild} from '../../firebase/controllers'
+import { ensureAdmin, getGuildIdFromInteraction } from "../../utils";
 
 export const adminsDeleteHandler = async (client: Client, interaction: CommandInteraction): Promise<void> => {
     const [guildId, guildIdErr] = await getGuildIdFromInteraction(interaction)

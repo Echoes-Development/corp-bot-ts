@@ -22,7 +22,7 @@ and intuitive.
 
 # Run Locally
 
-1. Install [Node](https://nodejs.org) v14+
+1. Install [Node](https://nodejs.org) v16+
 2. `npm install`
 3. Copy `.env.example` to `.env` and change values
 4. Download a firebase credentials file from your project and place it in the `priv` directory as `firebase-creds.json`

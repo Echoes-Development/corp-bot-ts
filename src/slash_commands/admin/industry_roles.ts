@@ -1,10 +1,8 @@
 import { Client, CommandInteraction } from 'discord.js'
 
-import fb from '../../firebase'
-import { getGuildIdFromInteraction } from '../utils'
-import {getGuild, updateGuild} from '../../firebase/controllers/guild'
-import {ensureAdmin} from "../../utils/permissions";
-import {IndyTypes} from "../../types/indy";
+import { getGuild, updateGuild } from '../../firebase/controllers'
+import { ensureAdmin, getGuildIdFromInteraction } from "../../utils";
+import { IndyTypes } from "../../types";
 
 export const adminIndustryRolesHandler = async (client: Client, interaction: CommandInteraction): Promise<void> => {
     const [guildId, guildIdErr] = await getGuildIdFromInteraction(interaction)
